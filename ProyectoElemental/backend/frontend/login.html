@@ -1,41 +1,87 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Elemental Gym</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f0f0f0; display: flex; justify-content: center; align-items: center; height: 100vh; }
-    .login-container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
-    input { width: 100%; padding: 0.5rem; margin-top: 0.5rem; margin-bottom: 1rem; }
-    button { width: 100%; padding: 0.5rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; }
-    button:hover { background: #004d99; }
-    .error { color: red; font-size: 0.9rem; }
+    :root{
+      /* Valores por defecto; se sobrescriben desde cargarConfigVisual.js */
+      --color-primario:#2c3e50;
+      --color-secundario:#34495e;
+      --color-botones:#0066cc;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg,var(--color-primario),var(--color-secundario));
+      min-height:100vh; margin:0; display:flex; align-items:center; justify-content:center; padding:16px;
+    }
+    .login-card{
+      width:100%; max-width:360px; background:#fff; border-radius:16px; box-shadow: 0 12px 30px rgba(0,0,0,.15);
+      padding: 24px 24px 28px;
+    }
+    .brand{display:flex;align-items:center;gap:10px;margin-bottom:12px;justify-content:center}
+    .brand img{width:48px;height:48px;object-fit:contain}
+    .brand .name{font-weight:700;color:var(--color-primario)}
+    h2{margin:10px 0 14px 0;color:#111;text-align:center}
+    label{font-size:.9rem;color:#444}
+    input{
+      width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:10px; margin-top:6px; margin-bottom:14px; font-size:1rem; background:#fafafa;
+    }
+    input:focus{outline:2px solid var(--color-primario); border-color: transparent}
+    button{
+      width:100%; padding:12px; border:none; border-radius:12px; background: var(--color-botones); color:#fff; font-weight:600; cursor:pointer; font-size:1rem;
+      transition: transform .04s ease, filter .15s ease;
+    }
+    button:hover{filter:brightness(0.95)}
+    button:active{transform:translateY(1px)}
+    .error{margin-top:12px; color: #c62828; font-size:.93rem; min-height:1.2em}
+    .helper{margin-top:8px; font-size:.85rem; color:#666; text-align:center}
   </style>
 </head>
 <body>
-  <div class="login-container">
+  <div class="login-card">
+    <div class="brand">
+      <img id="logoImg" alt="Logo Elemental Gym"/>
+      <div id="nombreGimnasio" class="name">Elemental Gym</div>
+    </div>
+
     <h2>Iniciar sesión</h2>
-    <input type="text" id="nombre" placeholder="Nombre de usuario" required />
-    <input type="password" id="contraseña" placeholder="Contraseña" required />
-    <button onclick="login()">Entrar</button>
+
+    <label for="nombre">Nombre de usuario</label>
+    <input id="nombre" type="text" autocomplete="username" required />
+
+    <label for="contrasena">Contraseña</label>
+    <input id="contrasena" type="password" autocomplete="current-password" placeholder="••••••••" required />
+
+    <button id="btnEntrar">Entrar</button>
     <div class="error" id="mensajeError"></div>
   </div>
 
   <script>
+    const API_BASE = 'http://3.149.75.175:80/api';
+
     async function login() {
-      const nombre = document.getElementById('nombre').value;
-      const contraseña = document.getElementById('contraseña').value;
+      const nombre = document.getElementById('nombre').value.trim();
+      const contrasena = document.getElementById('contrasena').value;
       const mensajeError = document.getElementById('mensajeError');
       mensajeError.textContent = '';
 
+      if (!nombre || !contrasena) {
+        mensajeError.textContent = 'Complete usuario y contraseña.';
+        return;
+      }
+
       try {
-        const respuesta = await fetch('http://3.149.75.175:80/api/auth/login', {
+        const respuesta = await fetch(`${API_BASE}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nombre, contraseña })
+          // El backend espera "contraseña", se envía con tilde:
+          body: JSON.stringify({ nombre, 'contraseña': contrasena })
         });
 
-        const datos = await respuesta.json();
+        const datos = await respuesta.json().catch(() => ({}));
 
         if (!respuesta.ok) {
           mensajeError.textContent = datos.mensaje || 'Error al iniciar sesión';
@@ -43,21 +89,32 @@
         }
 
         localStorage.setItem('token', datos.token);
-        localStorage.setItem('nombreUsuario', nombre);
+        localStorage.setItem('nombreUsuario', datos.nombre || nombre);
+        if (datos.rol) localStorage.setItem('rol', datos.rol);
 
         // Redirigir al dashboard según rol
-        if (datos.rol === 'admin') {
-          window.location.href = '../admin/dashboard.html';
-        } else if (datos.rol === 'entrenador') {
-          window.location.href = '/entrenador/dashboard.html';
-        } else {
-          window.location.href = '/cliente/dashboard.html';
+        switch (datos.rol) {
+          case 'admin':
+            window.location.href = '/admin/dashboard.html';
+            break;
+          case 'entrenador':
+            window.location.href = '/entrenador/dashboard.html';
+            break;
+          default:
+            window.location.href = '/cliente/dashboard.html';
         }
 
       } catch (error) {
+        console.error(error);
         mensajeError.textContent = 'Error de conexión con el servidor';
       }
     }
+
+    document.getElementById('btnEntrar').addEventListener('click', login);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
   </script>
+
+  <!-- Ajusta la ruta si tu estructura de carpetas es distinta -->
+  <script src="/utils/scripts/admin/cargarConfigVisual.js"></script>
 </body>
 </html>

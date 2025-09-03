@@ -111,7 +111,9 @@ hr {
   background: transparent; color: var(--color-botones); border:2px solid var(--color-botones);
   padding:10px 16px; border-radius:10px; font-weight:700; cursor:pointer;
 }
-
+.search-wrap{display:flex;gap:.5rem;align-items:center}
+  .search-wrap input{flex:1}
+  .btn-secondary{white-space:nowrap}
 /* Responsive */
 @media (max-width: 960px) {
   .header-bar { grid-template-columns: 1fr; text-align: center; }

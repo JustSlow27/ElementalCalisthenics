@@ -11,43 +11,54 @@
 <body>
   <!-- 2) CONTENEDOR INTERMEDIO (más pequeño que la página) -->
   <div class="shell">
-    <!-- tu encabezado dentro del shell -->
+    <!-- Encabezado -->
     <div class="header-bar">
       <div class="user-info">
         <span id="nombreUsuario">👤 Usuario</span>
       </div>
 
       <div class="logo-area">
-        <img id="logoImg" class="logo" />
+        <img id="logoImg" class="logo" alt="Logo del gimnasio" />
         <div id="nombreGimnasio" class="gym-name">Nombre Gimnasio</div>
       </div>
 
-      <button id="logoutBtn">Salir</button>
+      <button id="logoutBtn" type="button" class="btn-secondary">Salir</button>
     </div>
 
     <!-- 3) CONTENEDOR DE CONTENIDO (form, tablas, etc.) -->
     <div class="container">
       <div class="top-buttons">
         <div class="left-buttons">
-          <button onclick="window.location.href='../admin/personalizacion.html'">Personalización</button>
-          <button onclick="window.location.href='../admin/config-horario.html'">Configuracion de Horarios</button>
+          <button type="button" class="btn-secondary" onclick="window.location.href='../admin/personalizacion.html'">Personalización</button>
+          <button type="button" class="btn-secondary" onclick="window.location.href='../admin/config-horario.html'">Configuración de Horarios</button>
         </div>
         <div class="right-buttons">
-          <button onclick="window.location.href='../admin/pagos.html'">Pagos</button>
-          <button onclick="window.location.href='../admin/roles.html'">Usuarios</button>
+          <button type="button" class="btn-secondary" onclick="window.location.href='../admin/pagos.html'">Pagos</button>
+          <button type="button" class="btn-secondary" onclick="window.location.href='../admin/roles.html'">Usuarios</button>
         </div>
       </div>
 
       <hr />
 
       <div class="main-section">
+        <!-- Columna izquierda: formulario -->
         <div class="form-section">
-          <input type="text" id="searchInput" placeholder="Buscar ejercicio..." onkeyup="filterList()" />
+          <div class="search-wrap">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Buscar ejercicio..."
+              onkeyup="filterList()"
+              aria-label="Buscar ejercicio" />
+            <button type="button" id="btnClearSearch" class="btn-secondary">Limpiar</button>
+          </div>
+
           <input type="text" id="nombreEjercicio" placeholder="Nombre del ejercicio" />
           <input type="text" id="descripcionEjercicio" placeholder="Descripción" />
           <input type="text" id="tipoEjercicio" placeholder="Tipo de ejercicio" />
         </div>
 
+        <!-- Columna derecha: lista -->
         <div class="list-section">
           <h2>Ejercicios</h2>
           <ul id="exerciseList">
@@ -59,13 +70,14 @@
       </div>
 
       <div class="action-buttons">
-        <button>Crear</button>
-        <button>Eliminar</button>
-        <button>Editar</button>
+        <button type="button" class="btn-primary">Crear</button>
+        <button type="button" class="btn-secondary">Eliminar</button>
+        <button type="button" class="btn-secondary">Editar</button>
       </div>
     </div>
   </div>
-    <script src="../../utils/scripts/admin/cargarConfigVisual.js"></script>
+
+  <script src="../../utils/scripts/admin/cargarConfigVisual.js"></script>
   <script src="../../utils/scripts/admin/dashboard.js"></script>
   <script src="../../utils/scripts/admin/ejercicio.js"></script>
 </body>

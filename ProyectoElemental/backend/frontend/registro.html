@@ -4,38 +4,95 @@
   <meta charset="UTF-8" />
   <title>Registro de Usuario</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <style>
-    body { font-family: system-ui, Arial, sans-serif; margin: 24px; }
-    form { max-width: 420px; padding: 16px; border: 1px solid #e5e7eb; border-radius: 10px; }
-    label { display:block; margin-top: 12px; font-weight: 600; }
-    input, select, button { width: 100%; padding: 10px; margin-top: 6px; border-radius: 8px; border: 1px solid #d1d5db; }
-    button { background: #111827; color: white; border: none; cursor: pointer; }
-    button[disabled] { opacity: .7; cursor: not-allowed; }
-    .msg { margin-top: 12px; padding: 10px; border-radius: 10px; display:none; }
-    .msg.ok { background: #ecfdf5; color:#065f46; border:1px solid #a7f3d0; }
-    .msg.err { background: #fef2f2; color:#991b1b; border:1px solid #fecaca; }
+    :root {
+      /* Valores por defecto; se sobrescriben desde cargarConfigVisual.js */
+      --color-primario:#2c3e50;
+      --color-secundario:#34495e;
+      --color-botones:#0066cc;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family: system-ui, Arial, sans-serif;
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+    }
+    .card{
+      width:100%; max-width:480px;
+      background:#fff; border-radius:16px;
+      box-shadow:0 12px 30px rgba(0,0,0,.15);
+      padding:22px 22px 26px;
+    }
+    .brand{
+      display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:8px;
+    }
+    .brand img{width:48px; height:48px; object-fit:contain}
+    .brand .name{font-weight:800; color:var(--color-primario)}
+    h2{margin:8px 0 16px 0; text-align:center; color:#111}
+
+    form { width:100% }
+    label { display:block; margin-top:12px; font-weight:600; color:#333 }
+    input, select, button {
+      width:100%; padding:10px 12px; margin-top:6px;
+      border-radius:10px; border:1px solid #d1d5db; font-size:1rem; background:#fafafa;
+    }
+    input:focus, select:focus{
+      outline:2px solid var(--color-primario);
+      border-color:transparent;
+      background:#fff;
+    }
+    button{
+      margin-top:16px;
+      background: var(--color-botones);
+      color:#fff; border:none; cursor:pointer; font-weight:700;
+      transition: transform .04s ease, filter .15s ease;
+    }
+    button:hover{ filter:brightness(.96) }
+    button:active{ transform: translateY(1px) }
+    button[disabled]{ opacity:.75; cursor:not-allowed }
+
+    .msg{
+      margin-top:12px; padding:10px; border-radius:10px; display:none; font-size:.95rem;
+    }
+    .msg.ok{ background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0 }
+    .msg.err{ background:#fef2f2; color:#991b1b; border:1px solid #fecaca }
+
+    .helper{margin-top:8px; font-size:.85rem; color:#666; text-align:center}
   </style>
 </head>
 <body>
-  <h2>Registro</h2>
+  <div class="card">
+    <div class="brand">
+      <img id="logoImg" alt="Logo Elemental Gym" />
+      <div id="nombreGimnasio" class="name">Elemental Gym</div>
+    </div>
 
-  <form id="registroForm" autocomplete="off" novalidate>
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" minlength="3" required>
+    <h2>Registro</h2>
 
-    <label for="contraseña">Contraseña:</label>
-    <input type="password" id="contraseña" minlength="6" required>
+    <form id="registroForm" autocomplete="off" novalidate>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" minlength="3" required autocomplete="username">
 
-    <label for="sexo">Sexo:</label>
-    <select id="sexo" required>
-      <option value="" selected disabled>Selecciona…</option>
-      <option value="masculino">Masculino</option>
-      <option value="femenino">Femenino</option>
-    </select>
+      <label for="contrasena">Contraseña:</label>
+      <input type="password" id="contrasena" minlength="6" required autocomplete="new-password" placeholder="••••••••">
 
-    <button id="btnSubmit" type="submit">Registrar</button>
-    <div id="msg" class="msg"></div>
-  </form>
+      <label for="sexo">Sexo:</label>
+      <select id="sexo" required>
+        <option value="" selected disabled>Selecciona…</option>
+        <option value="masculino">Masculino</option>
+        <option value="femenino">Femenino</option>
+      </select>
+
+      <button id="btnSubmit" type="submit">Registrar</button>
+      <div id="msg" class="msg" aria-live="polite"></div>
+    </form>
+  </div>
 
   <script>
     const API = 'http://3.149.75.175:80/api/auth/register';
@@ -54,20 +111,21 @@
       box.style.display = 'none';
 
       const nombre = document.getElementById('nombre').value.trim();
-      const contraseña = document.getElementById('contraseña').value;
+      const contrasena = document.getElementById('contrasena').value;
       const sexo = document.getElementById('sexo').value;
 
-      if (!nombre || !contraseña || !sexo) {
+      if (!nombre || !contrasena || !sexo) {
         return showMsg('Completa todos los campos.', false);
       }
       if (nombre.length < 3) {
         return showMsg('El nombre debe tener al menos 3 caracteres.', false);
       }
-      if (contraseña.length < 6) {
+      if (contrasena.length < 6) {
         return showMsg('La contraseña debe tener al menos 6 caracteres.', false);
       }
 
-      const payload = { nombre, contraseña, sexo };
+      // El backend espera la clave con tilde: "contraseña"
+      const payload = { nombre, 'contraseña': contrasena, sexo };
 
       try {
         btn.disabled = true;
@@ -82,14 +140,12 @@
         const out = await res.json().catch(() => ({}));
 
         if (res.ok) {
-          // El backend debe guardar SIEMPRE rol: 'pendiente' y estado: 'pendiente'
-          if (out.token) {
-            localStorage.setItem('token', out.token);
-          }
+          // Tip: el backend debería forzar rol/estado "pendiente" al crear
+          if (out.token) localStorage.setItem('token', out.token);
           showMsg('✅ Usuario registrado.', true);
           form.reset();
-          // Si prefieres, redirige:
-          // window.location.href = 'login.html';
+          // Si prefieres redirigir al login:
+          // window.location.href = '/login.html';
         } else {
           const msg = out.mensaje || (out.errors && JSON.stringify(out.errors)) || 'No se pudo registrar';
           showMsg('❌ ' + msg, false);
@@ -102,6 +158,17 @@
         btn.textContent = 'Registrar';
       }
     });
+
+    // Enviar con Enter
+    document.addEventListener('keydown', (e) => { if (e.key === 'Enter') {
+      const el = document.activeElement;
+      // Evita enviar si el foco está en el select sin selección
+      if (el && el.tagName === 'SELECT' && !el.value) return;
+      form.requestSubmit();
+    }});
   </script>
+
+  <!-- Ajusta la ruta si tu estructura de carpetas es distinta -->
+  <script src="/utils/scripts/admin/cargarConfigVisual.js"></script>
 </body>
 </html>
