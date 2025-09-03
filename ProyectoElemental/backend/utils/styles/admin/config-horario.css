@@ -1,0 +1,173 @@
+/* ===== Encabezado ===== */
+.header-bar {
+  color: #fff;
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+.header-bar h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+.header-bar button { background: var(--color-botones); }
+
+/* ===== Tarjeta de contenido ===== */
+.container {
+  background: #fff;
+  color: var(--text);
+  border: var(--border);
+  border-radius: var(--radius);
+  margin: 16px 20px 24px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+/* ===== Formulario ===== */
+.form-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 10px 16px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.form-grid .actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* ===== Título tabla ===== */
+h2 {
+  margin: 14px 0 10px;
+  font-size: 1.1rem;
+}
+
+/* ===== Scroll de tabla (vertical + horizontal) ===== */
+.table-scroll {
+  width: 100%;
+  max-height: 380px;          /* ← ajusta a tu gusto */
+  overflow: auto;             /* ← ambos ejes */
+  border: 1px solid #e5e7eb;  /* el borde va en el contenedor */
+  border-radius: 12px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable both-edges;
+}
+
+/* Tabla (sin overflow/borde propio) */
+#tablaHorarios {
+  width: 100%;
+  min-width: 720px;           /* fuerza scroll horizontal si no cabe */
+  border-collapse: separate;  /* ayuda a sticky en algunos navegadores */
+  border-spacing: 0;
+  border: none;
+}
+
+/* Encabezado fijo (sticky) dentro del contenedor con scroll */
+#tablaHorarios thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: rgba(0,0,0,.04);
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 700;
+  /* opcional: sutil sombra al hacer scroll */
+  box-shadow: 0 1px 0 rgba(0,0,0,.05);
+}
+
+/* Celdas */
+#tablaHorarios tbody td {
+  padding: 10px 12px;
+  border-top: 1px solid #eee;
+}
+
+/* Evita quiebres de línea para mostrar el scroll horizontal si hace falta */
+#tablaHorarios th,
+#tablaHorarios td {
+  white-space: nowrap;
+}
+
+/* Estados */
+#tablaHorarios tbody tr:hover { background: rgba(0,0,0,.03); }
+#tablaHorarios tbody tr.is-selected { background: rgba(0, 102, 204, 0.08); }
+
+/* Acciones por fila (si las usas) */
+.table-actions { display: flex; gap: 8px; }
+
+.hidden { display: none; }
+
+/* ===== Responsive ===== */
+@media (max-width: 900px){
+  .form-grid { grid-template-columns: 1fr; }
+  .header-bar { grid-template-columns: 1fr; text-align: center; }
+  .header-bar button { justify-self: center; width: 100%; }
+  .table-scroll { max-height: 300px; }
+}
+.table-scroll{
+  overflow: auto;            /* vertical + horizontal */
+  background: transparent;   /* sin color en el área scrolleable */
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* === Tabla: sin huecos, ancho estable y scroll horizontal si no cabe === */
+#tablaHorarios{
+  width: 100%;
+  min-width: 720px;          /* ajusta si necesitas más ancho mínimo */
+  border-collapse: collapse; /* evita espacios entre celdas */
+  border-spacing: 0;         /* doble seguro ante espacios */
+  table-layout: fixed;       /* las columnas se estiran y el thead cubre todo */
+  border: none;
+}
+
+/* Las celdas no rompen línea para habilitar scroll horizontal si hace falta */
+#tablaHorarios th,
+#tablaHorarios td{
+  white-space: nowrap;
+  padding: 10px 12px;
+}
+
+/* === Encabezado sticky a TODO el ancho con color secundario === */
+/* 1) sticky por fila completa */
+#tablaHorarios thead{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* 2) color secundario sólido para TODA la fila */
+#tablaHorarios thead tr{
+  background: var(--color-primario, #3b82f6);
+}
+
+/* 3) hereda fondo, texto blanco y ligera separación visual */
+#tablaHorarios thead th{
+  background: inherit;     /* asegura que el color cubra todo el ancho de cada celda */
+  color: #fff;
+  font-weight: 800;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.12);
+}
+
+/* 4) Fallback adicional (por compatibilidad): sticky también en cada th */
+#tablaHorarios thead th{
+  position: sticky;
+  top: 0;
+  z-index: 11; /* encima del body */
+}
+
+/* Body */
+#tablaHorarios tbody td{ border-top: 1px solid #eee; }
+#tablaHorarios tbody tr:hover{ background: rgba(0,0,0,.03); }
+#tablaHorarios tbody tr.is-selected{ background: rgba(0,0,0,.06); }
+
+/* Opcional: limita alto en móvil para ver el sticky en acción */
+@media (max-width: 900px){
+  .table-scroll{ max-height: 300px; }
+}

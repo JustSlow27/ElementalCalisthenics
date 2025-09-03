@@ -1,0 +1,120 @@
+/* Encabezado dentro del shell */
+.header-bar{
+  color:#fff;
+  padding:18px 20px;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:center;
+  gap:12px;
+}
+.header-bar h1{
+  margin:0;
+  font-size:1.25rem;
+  font-weight:800;
+}
+.btn-back{ background: var(--color-botones); }
+
+/* Tarjeta blanca de contenido */
+.container{
+  background:#fff;
+  color:var(--text);
+  border:var(--border);
+  border-radius:var(--radius);
+  margin:16px 20px 24px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+/* Formulario en grilla (etiqueta a la izquierda, campo a la derecha) */
+.form-grid{
+  display:grid;
+  grid-template-columns: 230px 1fr;
+  gap:12px 16px;
+  align-items:center;
+}
+
+/* Campo a todo el ancho */
+.full-line{
+  grid-column: 1 / -1;
+}
+
+/* Acciones */
+.actions{
+  grid-column:1 / -1;
+  display:flex;
+  gap:12px;
+  justify-content:flex-end;
+  margin-top:12px;
+}
+.btn-primary{
+  background: var(--color-botones);
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn-secondary{
+  background: transparent;
+  color: var(--color-botones);
+  border: 2px solid var(--color-botones);
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* Disponibilidad de Agendamiento (bloque destacado) */
+.disponibilidad-card{
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+}
+.disp-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:6px;
+}
+.disp-icon{ font-size:1.25rem; }
+.disp-help{
+  margin: 0 0 10px 0;
+  color:#6b7280;
+  font-size:.95rem;
+}
+.disp-controls{
+  display:grid;
+  grid-template-columns: 230px 1fr;
+  gap:10px 16px;
+  align-items:center;
+}
+
+/* Ajuste visual para inputs tipo color y file */
+input[type="color"]{
+  height: 42px;
+  padding: 0 6px;
+}
+input[type="file"]{
+  padding: 8px 10px;
+  background: #fff;
+  border:1px solid #d9d9d9;
+  border-radius:10px;
+}
+
+/* Tabla de ejemplo / mensajes */
+#resultado{
+  margin-top: 16px;
+  color: #374151;
+  font-size: .95rem;
+}
+
+/* Responsive */
+@media (max-width: 900px){
+  .header-bar{ grid-template-columns:1fr; text-align:center; }
+  .form-grid{ grid-template-columns: 1fr; }
+  .disp-controls{ grid-template-columns: 1fr; }
+  .actions{ justify-content: stretch; flex-direction: column; }
+  .btn-secondary{ text-align:center; }
+}

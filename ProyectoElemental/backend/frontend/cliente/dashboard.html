@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mi Dashboard - Elemental Gym</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../utils/styles/global.css" />
+  <link rel="stylesheet" href="../../utils/styles/cliente/dashboard.css" />
+</head>
+<body>
+  <div class="shell">
+    <!-- Header -->
+    <div class="header-bar">
+      <div class="user-info"><span id="nombreUsuario">👤 Usuario</span></div>
+      <div class="logo-area">
+        <img id="logoImg" class="logo" />
+        <div id="nombreGimnasio" class="gym-name">Nombre Gimnasio</div>
+      </div>
+      <button class="btn-back" onclick="window.location.href='../login.html'">⬅ Volver</button>
+    </div>
+
+    <div class="container">
+      <!-- Paneles... (igual que los tuyos) -->
+      <!-- Agenda -->
+      <section class="panel panel-agenda">
+        <div class="panel-head">
+          <h2>Agendar Clase de Hoy</h2>
+          <small class="help">Elige un horario disponible.</small>
+        </div>
+        <div class="agenda-grid">
+          <div class="campo campo-dia" style="grid-column: 1 / -1;">
+            <span class="dia-label">Día:</span><span id="diaActivo" class="dia-activo"></span>
+          </div>
+          <div class="campo campo-horarios" style="grid-column: 1 / -1;">
+            <label class="lab-horarios">Horarios del día:</label>
+            <div id="listaHorarios" class="checklist"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rutina -->
+      <section class="panel panel-rutina">
+        <div class="panel-head">
+          <h2>Mi Rutina</h2>
+          <small class="help">Ejercicios asignados en la semana.</small>
+          <div class="rutina-nombre"><strong id="nombreRutina"></strong></div>
+        </div>
+        <div class="tabla-wrapper">
+          <table id="tablaRutinaUsuario">
+            <thead>
+              <tr id="theadDias"></tr>
+              <tr id="theadSub"></tr>
+            </thead>
+            <tbody id="tbodyRutina"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div id="modalEjercicio" class="eg-modal" aria-hidden="true">
+    <div class="eg-modal__backdrop" data-close-modal></div>
+    <div class="eg-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="egModalTitle">
+      <button class="eg-modal__close" aria-label="Cerrar" data-close-modal>&times;</button>
+      <h3 id="egModalTitle" class="eg-modal__title">Ejercicio</h3>
+      <p id="egModalDesc" class="eg-modal__desc">Descripción...</p>
+    </div>
+  </div>
+
+  <script src="http://localhost:4000/socket.io/socket.io.js"></script>
+  <script src="../../utils/scripts/cliente/agendarTiempoReal.js"></script>
+  <script src="../../utils/scripts/admin/cargarConfigVisual.js"></script>
+  <script src="../../utils/scripts/cliente/rutinaCliente.js"></script>
+</body>
+</html>

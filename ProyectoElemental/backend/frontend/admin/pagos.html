@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pagos - Elemental Gym</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../utils/styles/global.css" />
+  <link rel="stylesheet" href="../../utils/styles/admin/pagos.css" />
+</head>
+<body>
+  <div class="shell">
+    <div class="header-bar">
+      <button class="btn-back" onclick="window.location.href='dashboard.html'">⬅ Volver</button>
+      <h1>Gestión de Pagos</h1>
+    </div>
+
+    <div class="container">
+      <!-- Fila de título + filtros + buscador a la derecha -->
+      <div class="title-row" style="gap:12px; align-items:flex-end; flex-wrap:wrap;">
+        <h2 style="margin-right:auto;">Pagos Registrados</h2>
+
+        <!-- Filtros de mes / año (histórico de pagados) -->
+        <div class="filters-row" style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap;">
+          <label>
+            <span style="font-size:.9rem;color:#475569;">Mes</span><br/>
+            <select id="mesFiltro">
+              <option value="1">Enero</option>
+              <option value="2">Febrero</option>
+              <option value="3">Marzo</option>
+              <option value="4">Abril</option>
+              <option value="5">Mayo</option>
+              <option value="6">Junio</option>
+              <option value="7">Julio</option>
+              <option value="8">Agosto</option>
+              <option value="9">Septiembre</option>
+              <option value="10">Octubre</option>
+              <option value="11">Noviembre</option>
+              <option value="12">Diciembre</option>
+            </select>
+          </label>
+
+          <label>
+            <span style="font-size:.9rem;color:#475569;">Año</span><br/>
+            <input id="anioFiltro" type="number" min="2020" max="2100" style="width:110px;">
+          </label>
+
+          <button id="btnFiltrarFecha" class="btn-secondary" type="button" title="Filtrar por mes/año">
+            Buscar mes
+          </button>
+        </div>
+
+        <!-- Buscador de pendientes con autocomplete -->
+        <div class="search-box" role="search" style="min-width:280px;">
+          <input
+            type="search"
+            id="buscadorPagos"
+            placeholder="Buscar por nombre"
+            aria-label="Buscar pagos"
+            autocomplete="off"
+          />
+          <button id="btnLimpiarBusqueda" class="btn-secondary" type="button" title="Limpiar búsqueda">Limpiar</button>
+        </div>
+      </div>
+
+      <!-- Contenedor con altura fija y scroll -->
+      <div class="tabla-wrapper">
+        <table id="tablaPagos">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Estado</th>
+              <th>Fecha de Pago</th>
+              <th>Observaciones</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody><!-- filas dinámicas --></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../utils/scripts/admin/cargarConfigVisual.js"></script>
+  <script src="../../utils/scripts/admin/pagos.js"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+/* ========= Header dentro del shell ========= */
+.header-bar {
+  color: #fff;
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+.header-bar h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+.btn-back { background: var(--color-botones); }
+
+/* ========= Card blanca de contenido ========= */
+.container {
+  background: #fff;
+  color: var(--text);
+  border: var(--border);
+  border-radius: var(--radius);
+  margin: 16px 20px 24px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 20px;
+}
+
+/* ========= Panel superior: datos de rutina ========= */
+.panel-datos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 16px;
+}
+.campo { display: flex; flex-direction: column; gap: 8px; }
+.campo select[multiple] { min-height: 120px; }
+.help { color: #6b7280; font-size: .9rem; }
+
+/* ========= Panel ejercicios: buscador + resultados ========= */
+.panel-ejercicios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.buscador { display: flex; flex-direction: column; gap: 8px; }
+.resultados {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fafafa;
+}
+.resultados h3 { margin: 0 0 8px; font-size: 1rem; }
+#listaResultados {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  max-height: 220px;
+  overflow: auto;
+}
+#listaResultados li {
+  padding: 8px 10px;
+  border: 1px dashed #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+}
+#listaResultados li:hover { background: #f3f4f6; }
+
+/* ========= Panel tabla rutina ========= */
+.panel-tabla { display: grid; gap: 12px; }
+.tabla-head { display: flex; align-items: center; justify-content: space-between; }
+.acciones-tabla { display: flex; gap: 10px; }
+
+/* Contenedor con scroll horizontal */
+.tabla-scroll {
+  overflow-x: auto;
+  border: 1px solid color-mix(in oklab, var(--color-primario), white 75%);
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* Tabla base */
+#tablaRutina, #tablaRutina * { box-sizing: border-box; }
+#tablaRutina {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  font-size: 15px;
+  min-width: 800px;
+}
+
+/* Celdas */
+#tablaRutina th, #tablaRutina td {
+  border: 1px solid color-mix(in oklab, var(--color-primario), white 80%);
+  padding: 8px 10px;
+  text-align: center;
+  background: #fff;
+}
+
+/* Encabezado fila 1 (días) – franja continua con primario */
+#tablaRutina thead tr:first-child th {
+  border: none;
+  background: var(--color-primario);
+  color: var(--text-inv);
+  font-weight: 700;
+  padding: 12px 0;
+}
+#tablaRutina thead tr:first-child th:first-child { border-top-left-radius: 8px; }
+#tablaRutina thead tr:first-child th:last-child  { border-top-right-radius: 8px; }
+
+/* Encabezado fila 2 (Ejercicio / Reps) – tono suave */
+#tablaRutina thead tr:nth-child(2) th {
+  background: color-mix(in oklab, var(--color-primario), white 88%);
+  color: color-mix(in oklab, var(--color-primario), black 50%);
+  border: 1px solid color-mix(in oklab, var(--color-primario), white 70%);
+  font-weight: 600;
+  padding: 10px 0;
+}
+
+/* Filas cebra */
+#tablaRutina tbody tr:nth-child(even) td {
+  background: color-mix(in oklab, var(--color-primario), white 96%);
+}
+
+/* Inputs */
+#tablaRutina input {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid color-mix(in oklab, var(--color-primario), white 70%);
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+  background: #fff;
+}
+#tablaRutina input:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-primario), transparent 70%);
+}
+
+/* Anchos por tipo de columna */
+#tablaRutina th.ejercicio, #tablaRutina td.ejercicio {
+  width: 180px;
+  min-width: 160px;
+  text-align: left;
+}
+#tablaRutina th.reps, #tablaRutina td.reps {
+  width: 100px;
+  min-width: 60px;
+  text-align: center;
+}
+#tablaRutina td.ejercicio { position: relative; }
+
+/* Caja de sugerencias (dropdown) */
+.sugerencias {
+  position: absolute;
+  left: 8px; right: 8px;      /* alineado con padding del td */
+  top: calc(100% - 6px);      /* justo bajo el input */
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  border: 1px solid color-mix(in oklab, var(--color-primario), white 70%);
+  border-radius: 8px;
+  background: #fff;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 30;
+  box-shadow: 0 8px 18px rgba(0,0,0,.12);
+  display: none;              /* por defecto oculta */
+}
+
+.sugerencias li {
+  padding: 8px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sugerencias li:hover,
+.sugerencias li.activa {
+  background: color-mix(in oklab, var(--color-primario), white 88%);
+}
+
+/* ========= Botones ========= */
+.btn-primary {
+  background: var(--color-botones);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--color-botones);
+  border: 2px solid var(--color-botones);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-row {
+  background: var(--color-botones);
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-danger { background: #dc2626; }
+
+/* ========= Acciones finales ========= */
+.acciones-finales {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+
+
+/* ========= Responsive ========= */
+@media (max-width: 1100px) {
+  .panel-datos { grid-template-columns: 1fr; }
+  .panel-ejercicios { grid-template-columns: 1fr; }
+}
+
+/* ========= Fallback para navegadores sin color-mix ========= */
+@supports not (background: color-mix(in oklab, red, white 50%)) {
+  #tablaRutina th, #tablaRutina td { border: 1px solid #e5e7eb; }
+  #tablaRutina thead tr:nth-child(2) th {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-color: #e5e7eb;
+  }
+  #tablaRutina tbody tr:nth-child(even) td { background: #f9fafb; }
+  .tabla-scroll { border-color: #d1d5db; }
+}

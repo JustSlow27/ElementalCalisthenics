@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard Entrenador - Elemental Gym</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../utils/styles/global.css" />
+  <link rel="stylesheet" href="../../utils/styles/entrenador/dashboard.css" />
+  <style>
+    /* Estilos mínimos (puedes moverlos a tu CSS) */
+    .dias-chips{ display:flex; flex-wrap:wrap; gap:8px; }
+    .chip{
+      appearance:none; border:1px solid color-mix(in oklab, var(--color-primario, #1e293b), white 70%);
+      background:#fff; color:var(--text, #111827); padding:8px 12px; border-radius:999px;
+      font-weight:600; cursor:pointer; transition:all .15s ease; user-select:none;
+    }
+    .chip[aria-pressed="true"]{
+      background: var(--color-primario, #1e293b); color: var(--text-inv, #fff);
+      border-color: var(--color-primario, #1e293b);
+      box-shadow: 0 6px 16px rgba(0,0,0,.12) inset;
+    }
+    .chip:focus{ outline: 2px solid color-mix(in oklab, var(--color-primario, #1e293b), transparent 70%); outline-offset:2px; }
+    /* Ocultar el select que mantiene compatibilidad con tu JS */
+    #diasRutina{ display:none; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="header-bar">
+      <button class="btn-back" onclick="window.location.href='../login.html'">⬅ Volver</button>
+      <h1>Dashboard del Entrenador</h1>
+    </div>
+
+    <div class="container">
+      <!-- Panel superior -->
+      <section class="panel-datos">
+        <div class="campo">
+          <label for="nombreRutina">Nombre de la rutina</label>
+          <input type="text" id="nombreRutina" name="nombreRutina" placeholder="Ej. Fuerza Full Body" />
+        </div>
+<div class="campo">
+  <label for="fechaSemana">Semana de la rutina</label>
+  <input type="date" id="fechaSemana" name="fechaSemana">
+</div>
+
+        <div class="campo">
+          <label>Días</label>
+
+          <!-- Chips de días (todos DESMARCADOS por defecto) -->
+          <div id="diasChips" class="dias-chips" role="group" aria-label="Selecciona días">
+            <button type="button" class="chip" data-value="Lunes"     aria-pressed="false">Lun</button>
+            <button type="button" class="chip" data-value="Martes"    aria-pressed="false">Mar</button>
+            <button type="button" class="chip" data-value="Miércoles" aria-pressed="false">Mié</button>
+            <button type="button" class="chip" data-value="Jueves"    aria-pressed="false">Jue</button>
+            <button type="button" class="chip" data-value="Viernes"   aria-pressed="false">Vie</button>
+            <button type="button" class="chip" data-value="Sábado"    aria-pressed="false">Sáb</button>
+            <button type="button" class="chip" data-value="Domingo"   aria-pressed="false">Dom</button>
+          </div>
+          <small class="help">Toca para activar/desactivar los días. La tabla se crea al seleccionar.</small>
+
+          <!-- Select oculto (SIN selección) para compatibilidad con dashboard.js -->
+          <select id="diasRutina" multiple>
+            <option value="Lunes">Lunes</option>
+            <option value="Martes">Martes</option>
+            <option value="Miércoles">Miércoles</option>
+            <option value="Jueves">Jueves</option>
+            <option value="Viernes">Viernes</option>
+            <option value="Sábado">Sábado</option>
+            <option value="Domingo">Domingo</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="generoRutina">Género</label>
+          <select id="generoRutina" name="generoRutina">
+            <option value="" disabled selected>Selecciona…</option>
+            <option value="masculino">Hombres</option>
+            <option value="femenino">Mujeres</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Tabla -->
+      <section class="panel-tabla">
+        <div class="tabla-head">
+          <h2>Ejercicios de la rutina</h2>
+          <div class="acciones-tabla">
+            <button id="btnAgregarFila" class="btn-secondary">Agregar fila vacía</button>
+            <button id="btnEliminarFila" class="btn-secondary">Eliminar última fila</button>
+          </div>
+        </div>
+
+        <div class="tabla-scroll">
+          <table id="tablaRutina">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="acciones-finales">
+          <button id="btnGuardarRutina" class="btn-primary">Guardar Rutina</button>
+          <button id="btnEliminarRutina" class="btn-danger">Eliminar Rutina</button>
+        </div>
+      </section>
+    </div>
+  </div>
+    <script src="../../utils/scripts/entrenador/rutina.js"></script>
+  <script src="../../utils/scripts/admin/cargarConfigVisual.js"></script>
+  <script src="../../utils/scripts/entrenador/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuración de Horarios</title>
+  <link rel="stylesheet" href="../../utils/styles/global.css">
+  <link rel="stylesheet" href="../../utils/styles/admin/config-horario.css">
+</head>
+<body>
+  <!-- Contenedor intermedio con margen en todos los lados -->
+  <div class="shell">
+    <div class="header-bar">
+      <button onclick="window.location.href='dashboard.html'">⬅ Volver</button>
+      <h1>Configuración de Horarios</h1>
+    </div>
+
+    <div class="container">
+      <form id="horarioForm" class="form-grid">
+  <input type="hidden" id="horarioId" name="_id" />
+
+  <label>Día:</label>
+  <input type="text" name="dia" required placeholder="Lunes">
+
+  <label>Hora Inicio:</label>
+  <input type="time" name="hInicio" required>
+
+  <label>Hora Fin:</label>
+  <input type="time" name="hFin" required>
+
+  <label>Cupo Hombres:</label>
+  <input type="number" name="cupoHombres" required min="0">
+
+  <label>Cupo Mujeres:</label>
+  <input type="number" name="cupoMujeres" required min="0">
+
+  <div class="actions">
+    <button type="submit" id="btnGuardar">Guardar</button>
+    <button type="button" id="btnCancelar" class="btn-secondary hidden">Cancelar edición</button>
+  </div>
+</form>
+
+     <h2>Horarios Configurados</h2>
+
+<div class="table-scroll">
+  <table id="tablaHorarios">
+    <thead>
+      <tr>
+        <th>Día</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+        <th>Cupo Hombres</th>
+        <th>Cupo Mujeres</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+  </div>
+  <script src="../../utils/scripts/admin/cargarConfigVisual.js"></script>
+  <script src="../../utils/scripts/admin/configHorarios.js"></script>
+</body>
+</html>

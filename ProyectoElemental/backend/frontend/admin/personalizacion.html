@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Personalización - Elemental Gym</title>
+  <link rel="stylesheet" href="../../utils/styles/global.css" />
+  <link rel="stylesheet" href="../../utils/styles/admin/personalizacion.css" />
+</head>
+<body>
+  <!-- Contenedor intermedio con margen en todos los lados -->
+  <div class="shell">
+
+    <!-- Encabezado dentro del shell -->
+    <div class="header-bar">
+      <button class="btn-back" onclick="window.location.href='dashboard.html'">⬅ Volver</button>
+      <h1>Configuración Visual</h1>
+    </div>
+
+    <!-- Tarjeta de contenido -->
+    <div class="container">
+      <form id="configForm" class="form-grid" enctype="multipart/form-data">
+
+        <label for="nombreGimnasio">Nombre del Gimnasio</label>
+        <input type="text" name="nombreGimnasio" id="nombreGimnasio" required />
+
+        <label for="colorPrimario">Color Primario</label>
+        <input type="color" name="colorPrimario" id="colorPrimario" />
+
+        <label for="colorSecundario">Color Secundario</label>
+        <input type="color" name="colorSecundario" id="colorSecundario" />
+
+        <label for="colorBotones">Color de los Botones</label>
+        <input type="color" name="colorBotones" id="colorBotones" />
+
+        <label for="logo">Logo del Gimnasio</label>
+        <input type="file" id="logo" name="logo" accept="image/*" />
+
+        <!-- Disponibilidad de Agendamiento -->
+        <div class="full-line">
+          <div class="disponibilidad-card">
+            <div class="disp-head">
+              <h2>Disponibilidad de Agendamiento</h2>
+            </div>
+            <p class="disp-help">Selecciona la hora a partir de la cual se habilita la agenda diaria.</p>
+
+            <div class="disp-controls">
+              <label for="disponibilidadAgendamiento">Hora de habilitación</label>
+              <!-- Clock nativo del navegador -->
+              <input type="time" id="disponibilidadAgendamiento" name="disponibilidadAgendamiento" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <input type="submit" value="Guardar Configuración" class="btn-primary" />
+          <button type="button" id="volverDashboard" class="btn-secondary" onclick="window.location.href='dashboard.html'">
+            Volver al Dashboard
+          </button>
+        </div>
+      </form>
+
+      <div id="resultado"></div>
+    </div>
+  </div>
+  <script src="../../utils/scripts/admin/personalizacion.js"></script>
+  <script src="../../utils/scripts/admin/cargarConfigVisual.js"></script>
+</body>
+</html>

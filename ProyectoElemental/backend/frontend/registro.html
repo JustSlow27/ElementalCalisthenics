@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registro de Usuario</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 24px; }
+    form { max-width: 420px; padding: 16px; border: 1px solid #e5e7eb; border-radius: 10px; }
+    label { display:block; margin-top: 12px; font-weight: 600; }
+    input, select, button { width: 100%; padding: 10px; margin-top: 6px; border-radius: 8px; border: 1px solid #d1d5db; }
+    button { background: #111827; color: white; border: none; cursor: pointer; }
+    button[disabled] { opacity: .7; cursor: not-allowed; }
+    .msg { margin-top: 12px; padding: 10px; border-radius: 10px; display:none; }
+    .msg.ok { background: #ecfdf5; color:#065f46; border:1px solid #a7f3d0; }
+    .msg.err { background: #fef2f2; color:#991b1b; border:1px solid #fecaca; }
+  </style>
+</head>
+<body>
+  <h2>Registro</h2>
+
+  <form id="registroForm" autocomplete="off" novalidate>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" minlength="3" required>
+
+    <label for="contraseña">Contraseña:</label>
+    <input type="password" id="contraseña" minlength="6" required>
+
+    <label for="sexo">Sexo:</label>
+    <select id="sexo" required>
+      <option value="" selected disabled>Selecciona…</option>
+      <option value="masculino">Masculino</option>
+      <option value="femenino">Femenino</option>
+    </select>
+
+    <button id="btnSubmit" type="submit">Registrar</button>
+    <div id="msg" class="msg"></div>
+  </form>
+
+  <script>
+    const API = 'http://localhost:4000/api/auth/register';
+    const form = document.getElementById('registroForm');
+    const btn  = document.getElementById('btnSubmit');
+    const box  = document.getElementById('msg');
+
+    function showMsg(text, ok = true) {
+      box.textContent = text;
+      box.className = 'msg ' + (ok ? 'ok' : 'err');
+      box.style.display = 'block';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      box.style.display = 'none';
+
+      const nombre = document.getElementById('nombre').value.trim();
+      const contraseña = document.getElementById('contraseña').value;
+      const sexo = document.getElementById('sexo').value;
+
+      if (!nombre || !contraseña || !sexo) {
+        return showMsg('Completa todos los campos.', false);
+      }
+      if (nombre.length < 3) {
+        return showMsg('El nombre debe tener al menos 3 caracteres.', false);
+      }
+      if (contraseña.length < 6) {
+        return showMsg('La contraseña debe tener al menos 6 caracteres.', false);
+      }
+
+      const payload = { nombre, contraseña, sexo };
+
+      try {
+        btn.disabled = true;
+        btn.textContent = 'Registrando…';
+
+        const res = await fetch(API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const out = await res.json().catch(() => ({}));
+
+        if (res.ok) {
+          // El backend debe guardar SIEMPRE rol: 'pendiente' y estado: 'pendiente'
+          if (out.token) {
+            localStorage.setItem('token', out.token);
+          }
+          showMsg('✅ Usuario registrado.', true);
+          form.reset();
+          // Si prefieres, redirige:
+          // window.location.href = 'login.html';
+        } else {
+          const msg = out.mensaje || (out.errors && JSON.stringify(out.errors)) || 'No se pudo registrar';
+          showMsg('❌ ' + msg, false);
+        }
+      } catch (err) {
+        console.error(err);
+        showMsg('❌ Error en la conexión con el servidor', false);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Registrar';
+      }
+    });
+  </script>
+</body>
+</html>

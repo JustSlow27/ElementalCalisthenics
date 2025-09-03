@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Elemental Gym</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f0f0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .login-container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
+    input { width: 100%; padding: 0.5rem; margin-top: 0.5rem; margin-bottom: 1rem; }
+    button { width: 100%; padding: 0.5rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #004d99; }
+    .error { color: red; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Iniciar sesión</h2>
+    <input type="text" id="nombre" placeholder="Nombre de usuario" required />
+    <input type="password" id="contraseña" placeholder="Contraseña" required />
+    <button onclick="login()">Entrar</button>
+    <div class="error" id="mensajeError"></div>
+  </div>
+
+  <script>
+    async function login() {
+      const nombre = document.getElementById('nombre').value;
+      const contraseña = document.getElementById('contraseña').value;
+      const mensajeError = document.getElementById('mensajeError');
+      mensajeError.textContent = '';
+
+      try {
+        const respuesta = await fetch('http://localhost:4000/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre, contraseña })
+        });
+
+        const datos = await respuesta.json();
+
+        if (!respuesta.ok) {
+          mensajeError.textContent = datos.mensaje || 'Error al iniciar sesión';
+          return;
+        }
+
+        localStorage.setItem('token', datos.token);
+        localStorage.setItem('nombreUsuario', nombre);
+
+        // Redirigir al dashboard según rol
+        if (datos.rol === 'admin') {
+          window.location.href = '../admin/dashboard.html';
+        } else if (datos.rol === 'entrenador') {
+          window.location.href = '/entrenador/dashboard.html';
+        } else {
+          window.location.href = '/cliente/dashboard.html';
+        }
+
+      } catch (error) {
+        mensajeError.textContent = 'Error de conexión con el servidor';
+      }
+    }
+  </script>
+</body>
+</html>

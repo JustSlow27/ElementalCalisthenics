@@ -1,0 +1,146 @@
+/* Encabezado dentro del shell */
+.header-bar{
+  color:#fff;
+  padding:18px 20px;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:center;
+  gap:12px;
+}
+.header-bar h1{
+  margin:0;
+  font-size:1.25rem;
+  font-weight:800;
+}
+.btn-back{ background: var(--color-botones); }
+
+/* Tarjeta de contenido */
+.container{
+  background:#fff;
+  color:var(--text);
+  border:var(--border);
+  border-radius:var(--radius);
+  margin:16px 20px 24px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+/* Título + buscador a la derecha */
+.title-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+.title-row h2{
+  margin:0;
+}
+
+/* Buscador */
+.search-box{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-left:auto;
+}
+.search-box input[type="search"]{
+  min-width:220px;
+  width:clamp(220px, 30vw, 360px);
+  padding:10px 12px;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  outline:none;
+  font-size:0.95rem;
+}
+.search-box input[type="search"]:focus{
+  border-color: var(--color-botones);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.04);
+}
+
+/* Acciones del formulario (si se usan en esta vista) */
+.actions{
+  display:flex;
+  gap:12px;
+  justify-content:flex-end;
+  margin-top:6px;
+}
+.btn-primary{
+  background: var(--color-botones);
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn-secondary{
+  background: transparent;
+  color: var(--color-botones);
+  border: 2px solid var(--color-botones);
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* Wrapper de tabla con scroll */
+.tabla-wrapper{
+  max-height:60vh;
+  overflow:auto;
+}
+
+/* Tabla */
+#tablaPagos{
+  width:100%;
+  border-collapse: collapse;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+#tablaPagos thead th{
+  text-align:left;
+  background: rgba(0,0,0,.04);
+  padding:10px 12px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+#tablaPagos tbody td{
+  padding:10px 12px;
+  border-top:1px solid #eee;
+}
+#tablaPagos tbody tr:hover{
+  background: rgba(0,0,0,.03);
+}
+
+/* Fila "sin resultados" */
+.empty-row{
+  text-align:center;
+  color:#6b7280;
+  font-style:italic;
+  padding:18px 12px !important;
+}
+
+/* Badges opcionales para estados */
+.badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:.85rem;
+  font-weight:700;
+  color:#fff;
+}
+.badge.pendiente{ background: #f59e0b; }
+.badge.aprobado{  background: #16a34a; }
+.badge.rechazado{ background: #dc2626; }
+
+/* Responsive */
+@media (max-width: 900px){
+  .header-bar{ grid-template-columns:1fr; text-align:center; }
+  .title-row{ flex-direction:column; align-items:stretch; }
+  .search-box{ width:100%; }
+  .search-box input[type="search"]{ width:100%; }
+  .actions{ justify-content: stretch; flex-direction: column; }
+}
