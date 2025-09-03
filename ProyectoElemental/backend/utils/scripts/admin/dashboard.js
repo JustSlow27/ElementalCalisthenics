@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Aplicar configuración visual
   try {
-    const res = await fetch('http://localhost:4000/api/configuracion-visual', {
+    const res = await fetch('http://3.149.75.175:80/api/configuracion-visual', {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const logoImg = document.getElementById('logoImg');
       if (logoImg) {
         const timestamp = Date.now(); // Evita caché de navegador
-        logoImg.src = `http://localhost:4000${config.logoURL}?t=${timestamp}`;
+        logoImg.src = `http://3.149.75.175:80${config.logoURL}?t=${timestamp}`;
         logoImg.alt = config.nombreGimnasio || 'Logo del gimnasio';
       }
     }

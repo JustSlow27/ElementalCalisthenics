@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  const API = "http://localhost:4000/api/agendamientoRT";
+  const API = "http://3.149.75.175:80/api/agendamientoRT";
   const token = localStorage.getItem("token");
   if (!token) { alert("⚠️ Sesión expirada."); location.href = "../../login.html"; return; }
 
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function conectarSocket() {
-    socket = io("http://localhost:4000", {
+    socket = io("http://3.149.75.175:80", {
       transports: ['websocket'],
       auth: { token }
     });

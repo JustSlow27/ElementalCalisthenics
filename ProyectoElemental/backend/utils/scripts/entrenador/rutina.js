@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_BASE = "http://localhost:4000/api/rutinas";
+  const API_BASE = "http://3.149.75.175:80/api/rutinas";
   const token = localStorage.getItem("token");
 
   if (!token) {

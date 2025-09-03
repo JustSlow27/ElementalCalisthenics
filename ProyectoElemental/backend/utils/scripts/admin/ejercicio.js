@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4000/api/ejercicios';
+const API_URL = 'http://3.149.75.175:80/api/ejercicios';
 const token = localStorage.getItem('token');
 
 // Si no hay sesión, redirige

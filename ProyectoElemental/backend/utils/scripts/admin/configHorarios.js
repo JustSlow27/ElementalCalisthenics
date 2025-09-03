@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4000/api/config-horarios';
+const API_URL = 'http://3.149.75.175:80/api/config-horarios';
 const token = localStorage.getItem('token');
 
 // Redirigir si no hay sesión

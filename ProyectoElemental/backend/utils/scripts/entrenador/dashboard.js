@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const $$ = (s, c=document) => Array.from(c.querySelectorAll(s));
 
   // ==== API & Auth ====
-  const API_BASE        = 'http://localhost:4000/api';
+  const API_BASE        = 'http://3.149.75.175:80/api';
   const API_EJERCICIOS  = `${API_BASE}/ejercicios/autocomplete`; // GET ?search=
   const token = localStorage.getItem('token');
   if (!token) {

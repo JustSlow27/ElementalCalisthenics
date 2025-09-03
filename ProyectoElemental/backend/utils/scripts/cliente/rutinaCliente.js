@@ -1,6 +1,6 @@
 // utils/scripts/cliente/rutinaCliente.js
 document.addEventListener("DOMContentLoaded", async () => {
-  const API_RUTINA_CLIENTE = "http://localhost:4000/api/rutinas/mia";
+  const API_RUTINA_CLIENTE = "http://3.149.75.175:80/api/rutinas/mia";
   const token = localStorage.getItem("token");
   const nombre = localStorage.getItem("nombreUsuario");
 
