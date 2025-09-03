@@ -79,24 +79,35 @@
       console.error('Error al aplicar configuración visual:', err);
     }
 
-    // ---------- Botón "Limpiar" del buscador ----------
-    const btnClear    = document.getElementById('btnClearSearch'); // Debe existir en el HTML
-    const searchInput = document.getElementById('searchInput');
+    // ---------- Utilidad: limpiar todo ----------
+    const searchInput  = document.getElementById('searchInput');
+    const nombreInput  = document.getElementById('nombreEjercicio');
+    const descInput    = document.getElementById('descripcionEjercicio');
+    const tipoInput    = document.getElementById('tipoEjercicio');
 
-    if (btnClear && searchInput) {
-      btnClear.addEventListener('click', () => {
+    function clearAll() {
+      if (searchInput) {
         searchInput.value = '';
         window.filterList(); // restaura la lista
-        searchInput.focus();
-      });
-
-      // Atajo: ESC limpia el buscador
-      searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          searchInput.value = '';
-          window.filterList();
-        }
-      });
+      }
+      if (nombreInput) nombreInput.value = '';
+      if (descInput)   descInput.value   = '';
+      if (tipoInput)   tipoInput.value   = '';
+      if (searchInput) searchInput.focus();
     }
+
+    // ---------- Botón "Limpiar" ----------
+    const btnClear = document.getElementById('btnClearSearch'); // Debe existir en el HTML
+    if (btnClear) {
+      btnClear.addEventListener('click', clearAll);
+    }
+
+    // ---------- ESC en cualquiera de los campos también limpia todo ----------
+    [searchInput, nombreInput, descInput, tipoInput].forEach(el => {
+      if (!el) return;
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') clearAll();
+      });
+    });
   });
 })();
