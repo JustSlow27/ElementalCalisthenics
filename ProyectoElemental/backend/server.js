@@ -11,10 +11,6 @@ app.use(express.json());
 app.use(cors());
 
 
-app.get('/', (req, res) => {
-  res.send('API funcionando');
-});
-
 // ✅ Rutas de autenticación (registro y login)
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
@@ -36,6 +32,9 @@ app.use(express.static(path.join(__dirname, 'frontend'))); // Sirve HTML como lo
 app.use('/utils', express.static(path.join(__dirname, 'utils'))); // Sirve archivos CSS o JS personalizados
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Para logos o imágenes subidas
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'login.html'));
+});
 const cron = require('node-cron');
 const { resetPendientesMesJob } = require('./controllers/pagoController');
 

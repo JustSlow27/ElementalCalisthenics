@@ -13,14 +13,13 @@
     <div class="header-bar">
       <div class="user-info"><span id="nombreUsuario">👤 Usuario</span></div>
       <div class="logo-area">
-        <img id="logoImg" class="logo" />
+        <img id="logoImg" class="logo" alt="Logo del gimnasio" />
         <div id="nombreGimnasio" class="gym-name">Nombre Gimnasio</div>
       </div>
       <button class="btn-back" onclick="window.location.href='../login.html'">⬅ Volver</button>
     </div>
 
-    <div class="container">
-      <!-- Paneles... (igual que los tuyos) -->
+    <div class="container panels-grid">
       <!-- Agenda -->
       <section class="panel panel-agenda">
         <div class="panel-head">
@@ -58,6 +57,7 @@
     </div>
   </div>
 
+  <!-- Modal -->
   <div id="modalEjercicio" class="eg-modal" aria-hidden="true">
     <div class="eg-modal__backdrop" data-close-modal></div>
     <div class="eg-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="egModalTitle">

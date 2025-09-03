@@ -64,6 +64,9 @@
     .msg.err{ background:#fef2f2; color:#991b1b; border:1px solid #fecaca }
 
     .helper{margin-top:8px; font-size:.85rem; color:#666; text-align:center}
+    .altnav{margin-top:12px; text-align:center; font-size:.9rem; color:#555}
+    .altnav a{color:var(--color-botones); font-weight:700; text-decoration:none}
+    .altnav a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
@@ -92,6 +95,11 @@
       <button id="btnSubmit" type="submit">Registrar</button>
       <div id="msg" class="msg" aria-live="polite"></div>
     </form>
+
+    <div class="altnav">
+      ¿Ya tienes cuenta?
+      <a href="./login.html" id="toLogin">Inicia sesión</a>
+    </div>
   </div>
 
   <script>
@@ -140,12 +148,11 @@
         const out = await res.json().catch(() => ({}));
 
         if (res.ok) {
-          // Tip: el backend debería forzar rol/estado "pendiente" al crear
           if (out.token) localStorage.setItem('token', out.token);
           showMsg('✅ Usuario registrado.', true);
           form.reset();
-          // Si prefieres redirigir al login:
-          // window.location.href = '/login.html';
+          // Si prefieres redirigir directo al login, descomenta:
+          // window.location.href = './login.html';
         } else {
           const msg = out.mensaje || (out.errors && JSON.stringify(out.errors)) || 'No se pudo registrar';
           showMsg('❌ ' + msg, false);
@@ -162,7 +169,6 @@
     // Enviar con Enter
     document.addEventListener('keydown', (e) => { if (e.key === 'Enter') {
       const el = document.activeElement;
-      // Evita enviar si el foco está en el select sin selección
       if (el && el.tagName === 'SELECT' && !el.value) return;
       form.requestSubmit();
     }});

@@ -217,7 +217,7 @@ label.check.selected .dot::after{ content:""; position:absolute; inset:3px; bord
   box-shadow: 0 1px 0 rgba(0,0,0,.12);  /* ← sutil línea bajo el thead */
 }
 
-/* Área scrolleable para sticky */
+/* Área scrolleable para sticky (refuerzo de altura y scroll) */
 .tabla-wrapper{
   position: relative;
   display: block;
@@ -225,6 +225,7 @@ label.check.selected .dot::after{ content:""; position:absolute; inset:3px; bord
   overflow-y: auto;
   overflow-x: auto;
 }
+
 /* =========================
    Botones
 ========================= */
@@ -269,7 +270,7 @@ label.check.selected .dot::after{ content:""; position:absolute; inset:3px; bord
 }
 
 /* =========================
-   Responsive
+   Responsive (tus reglas base)
 ========================= */
 @media (max-width:1100px){ .agenda-grid{ grid-template-columns:1fr 1fr; } }
 @media (max-width:700px){
@@ -280,4 +281,68 @@ label.check.selected .dot::after{ content:""; position:absolute; inset:3px; bord
 @media (min-height:900px){
   .checklist{ max-height:520px; }
   .tabla-wrapper{ height:620px; } /* más alto si la pantalla es grande */
+}
+
+/* =========================
+   Overrides responsive SIN cambiar tu interfaz
+   (añadidos para móvil y tablet)
+========================= */
+
+/* Teléfonos ≤ 640px */
+@media (max-width: 640px) {
+  .shell { padding-inline: 12px; }
+
+  /* Header apilado y centrado */
+  .header-bar {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+  .logo { width: 56px; max-height: 56px; }
+
+  /* Contenedor y paneles más compactos */
+  .container { margin: 12px 0 16px; padding: 14px; }
+  .panel { padding: 12px; }
+  .panel-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .help { font-size: .85rem; }
+
+  /* Agenda: 1 columna (sin tocar tu estructura) */
+  .agenda-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+  .campo.campo-dia { flex-wrap: wrap; }
+
+  /* Scrolls más contenidos en móvil */
+  .checklist { max-height: 45vh; }
+  .tabla-wrapper { height: 50vh; }
+
+  /* Tabla: mantener scroll horizontal pero más compacta */
+  #tablaRutinaUsuario { min-width: 720px; } /* antes 980px */
+  #tablaRutinaUsuario th,
+  #tablaRutinaUsuario td {
+    min-width: 110px;          /* antes 140px */
+    padding: 8px 10px;         /* ligeramente menor */
+  }
+
+  /* Altura de la 1ª fila sticky del thead (ajústala si tu cabecera es más alta) */
+  :root { --thead1-h: 36px; }
+}
+
+/* Tablets 641–900px */
+@media (min-width: 641px) and (max-width: 900px) {
+  .agenda-grid { grid-template-columns: 1fr 1fr; }
+  .tabla-wrapper { height: 60vh; }
+
+  /* Un poco más de ancho mínimo de tabla en tablet */
+  #tablaRutinaUsuario { min-width: 900px; }
+  #tablaRutinaUsuario th,
+  #tablaRutinaUsuario td { min-width: 120px; }
+}
+
+/* Pantallas con poca altura (p.ej. móviles apaisados) */
+@media (max-height: 640px) {
+  .tabla-wrapper { height: 55vh; }
+  .checklist { max-height: 40vh; }
 }

@@ -37,7 +37,9 @@
     button:hover{filter:brightness(0.95)}
     button:active{transform:translateY(1px)}
     .error{margin-top:12px; color: #c62828; font-size:.93rem; min-height:1.2em}
-    .helper{margin-top:8px; font-size:.85rem; color:#666; text-align:center}
+    .altnav{margin-top:12px; text-align:center; font-size:.9rem; color:#555}
+    .altnav a{color:var(--color-botones); font-weight:700; text-decoration:none}
+    .altnav a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
@@ -57,6 +59,11 @@
 
     <button id="btnEntrar">Entrar</button>
     <div class="error" id="mensajeError"></div>
+
+    <div class="altnav">
+      ¿No tienes cuenta?
+      <a href="./registro.html" id="toRegister">Regístrate</a>
+    </div>
   </div>
 
   <script>
